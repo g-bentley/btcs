@@ -1,37 +1,35 @@
 # btcs
 
-Due to a massive rework based on current needs, any similarity to any other
-project is purely conincidental.
+## Docker Compose for BrewTroller Command Center (btcs)
 
-The original readme from the rkit project this originally came from:
+### Software
 
-# Docker Compose for PHP Stack
-
-## Software
-
-- PHP 5.5  
-  - fpm, redis, mongo, gd, imagick, xdebug, memcache, memcached, icu (55.1), opcache
-- Nginx 1.9
+- Nginx 1.11
+- PHP 5.6-FPM
+  - libraries used are a work in progress
+  - Composer
 - MySQL 5.6
-- Ruby
-- Git
 - Nodejs + NPM
-- Composer
 
-## Install
+### Install
 
-1. Install [Docker](https://www.docker.com/) for Linux or [Docker Toolbox](https://www.docker.com/toolbox/) for OS X & Windows
+1. Install [Docker](https://www.docker.com/). Native versions are recommended.
 
 2. Get the source
    ```
-   git clone https://github.com/rkit/docker-compose-phpstack.git
-   cd docker-compose-phpstack
+   git clone https://github.com/g-bentley/btcs/btcs.git
+   cd btcs
    ```
 
-3. Create and start containers
+3. Shut down any local web server bound to localhost port 80.
+
+4. Download web applications to app/ and set docker-compose volumes to map to desired locations.
+
+5. Create and start containers
 
    ```
    docker-compose up -d
    ```
 
-4. Open [http://192.168.99.100](http://192.168.99.100) (OS X, Windows) or [http://127.0.0.1](http://127.0.0.1) (Linux)
+
+6. Open [http://localhost/main/](http://localhost/main/)
