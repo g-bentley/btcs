@@ -7,7 +7,7 @@ The original readme from the rkit project this originally came from:
 
 # Docker Compose for PHP Stack
 
-## Soft
+## Software
 
 - PHP 5.5  
   - fpm, redis, mongo, gd, imagick, xdebug, memcache, memcached, icu (55.1), opcache
