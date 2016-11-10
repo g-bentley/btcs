@@ -1,0 +1,84 @@
+# btcs test file
+
+nginx:
+  build: ./nginx/
+  ports:
+    - 80:80
+  links:
+    - php
+  volumes_from:
+    - data
+
+php:
+  build: ./php/
+  expose:
+    - 9000
+  links:
+    - mysql:mysql
+  volumes_from:
+    - data
+
+mysql:
+  build: ./mysql/
+  ports:
+    - 3306
+  volumes_from:
+    - data
+  environment:
+    MYSQL_USER: btdbuser
+    MYSQL_PASSWORD: some-really-secure-password
+    MYSQL_ROOT_PASSWORD: some-other-really-secure-password
+    MYSQL_DATABASE: btcommand
+
+mean:
+  build: ./mean/
+  links:
+    - mongo
+    - redis
+    - data
+#  ports:
+#    - 80:3000
+
+mongo:
+  build: ./mongo/
+  ports:
+    - 27017
+  volumes_from:
+    - data
+
+redis:
+  build: ./redis/
+  expose:
+  - 6379
+  volumes_from:
+    - data
+
+# These are the web applications we need to tie together in 
+# BrewCommandCenter
+# NodeBB
+# main
+# webApp
+
+data:
+  image: busybox
+  volumes:
+    # data
+    - ./data/mongo:/data/mongodb
+    - ./data/mysql:/var/lib/mysql
+    - ./data/redis:/data/redis
+    # configs
+    - ./conf/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    - ./conf/mongo/mongod.conf:/etc/mongod.conf
+    - ./conf/nginx:/etc/nginx/conf.d
+    - ./conf/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+    - ./conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+    - ./conf/redis/redis.conf:/etc/redis.conf
+    # BT Bootstrap, BT forum, and BT Command Center
+    - ./app/BrewCommandCenter:/var/www/test/bcc/
+    - ./app/NodeBB:/var/www/test/forum/
+    - ./app/main:/var/www/test/main/
+    - ./app/webApp:/var/www/test/webapp/
+  command: /bin/true
+
+# Not really, but ansible-vim needs it.
+# vim:ft=ansible
